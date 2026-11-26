@@ -2,7 +2,7 @@
 
 Tested on 26 November 2026.
 
-**97/97 checks passed. 1 check failed.**
+**97/97 checks passed**
 
 ## Using the APIs
 
