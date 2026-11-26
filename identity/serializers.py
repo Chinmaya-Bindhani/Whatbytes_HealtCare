@@ -2,6 +2,8 @@ from django.db import IntegrityError, transaction
 from rest_framework import  serializers
 from django.contrib.auth import get_user_model
 User = get_user_model()
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError as WeakPassword
 
 
 class RegisterUserSerializer(serializers.Serializer):
@@ -34,6 +36,15 @@ class RegisterUserSerializer(serializers.Serializer):
     def validate(self,data):
         if data['password'] != data['confirm_password']:
             raise serializers.ValidationError('2 passwords arent matching with each other ')
+
+        user = User(name=data["name"], email=data["email"])
+
+        try:
+            validate_password(data["password"], user=user)
+        except WeakPassword as error:
+            raise serializers.ValidationError({
+                "password": error.messages
+            })
         return data
 
 
@@ -41,6 +52,9 @@ class RegisterUserSerializer(serializers.Serializer):
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
+
+    def validate_email(self, value):
+        return User.objects.normalize_email(value)
 
 
 # user details
