@@ -11,6 +11,43 @@ Use http://127.0.0.1:8000 as the local base URL. Register using name, email, pas
 Doctor fields are name, specialization, email and phone. Patient fields are name, age, email and phone. Contact fields are optional. Patient ownership is assigned by the server.
 
 Create mappings with patient and doctor IDs. GET /api/mappings/<patient_id>/ accepts a patient ID. DELETE /api/mappings/<mapping_id>/ accepts the mapping's own ID. Removing a mapping preserves both records. Authenticated users can manage all doctors; patient and mapping access is restricted to the patient owner.
+## APIs to Be Implemented
+
+### 1. Authentication APIs
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/auth/register/` | Register a new user with name, email, and password. |
+| POST | `/api/auth/login/` | Log in a user and return a JWT token. |
+
+### 2. Patient Management APIs
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/patients/` | Add a new patient (Authenticated users only). |
+| GET | `/api/patients/` | Retrieve all patients created by the authenticated user. |
+| GET | `/api/patients/<id>/` | Get details of a specific patient. |
+| PUT | `/api/patients/<id>/` | Update patient details. |
+| DELETE | `/api/patients/<id>/` | Delete a patient record. |
+
+### 3. Doctor Management APIs
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/doctors/` | Add a new doctor (Authenticated users only). |
+| GET | `/api/doctors/` | Retrieve all doctors. |
+| GET | `/api/doctors/<id>/` | Get details of a specific doctor. |
+| PUT | `/api/doctors/<id>/` | Update doctor details. |
+| DELETE | `/api/doctors/<id>/` | Delete a doctor record. |
+
+### 4. Patient-Doctor Mapping APIs
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/mappings/` | Assign a doctor to a patient. |
+| GET | `/api/mappings/` | Retrieve all patient-doctor mappings. |
+| GET | `/api/mappings/<patient_id>/` | Get all doctors assigned to a specific patient. |
+| DELETE | `/api/mappings/<id>/` | Remove a doctor from a patient.
 
 ## Individual results
 
